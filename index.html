@@ -1,0 +1,2688 @@
+<!DOCTYPE html>
+<html lang="fa" dir="rtl">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#0a0a0a">
+
+    <title>آموزش یار 13 ابان</title>
+
+    <link rel="stylesheet" href="bootstrap-5.0.2-dist/css/bootstrap.min.css">
+    <link rel="stylesheet"
+        href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.min.css">
+
+    <style>
+        @font-face {
+            font-family: VazirCustom;
+            src: url("Vazirmatn-Black.ttf");
+        }
+
+        * {
+            box-sizing: border-box;
+        }
+
+        body {
+            margin: 0;
+            background: #0a0a0a;
+            color: #fff;
+            font-family: VazirCustom, Tahoma, sans-serif;
+            min-height: 100vh;
+        }
+
+        button,
+        input,
+        select,
+        textarea {
+            font-family: inherit;
+        }
+
+        .page {
+            display: none;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        /* LOGIN */
+        #loginPage {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 25px;
+            background:
+                radial-gradient(circle at top, #222 0%, #0a0a0a 45%, #050505 100%);
+        }
+
+        .login-box {
+            width: 100%;
+            max-width: 1000px;
+            background: #111;
+            border: 1px solid #333;
+            border-radius: 28px;
+            padding: 35px;
+            box-shadow: 0 0 45px rgba(255,255,255,.05);
+        }
+
+        .login-title {
+            text-align: center;
+            font-size: 30px;
+            margin-bottom: 8px;
+        }
+
+        .login-subtitle {
+            text-align: center;
+            color: #999;
+            margin-bottom: 30px;
+        }
+
+        .user-card {
+            background: #171717;
+            border: 1px solid #303030;
+            border-radius: 22px;
+            padding: 30px 20px;
+            text-align: center;
+            cursor: pointer;
+            transition: .25s;
+            height: 100%;
+        }
+
+        .user-card:hover {
+            transform: translateY(-5px);
+            border-color: #777;
+            box-shadow: 0 10px 35px rgba(255,255,255,.06);
+        }
+
+        .user-icon {
+            width: 75px;
+            height: 75px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: auto auto 18px;
+            background: #252525;
+            font-size: 34px;
+        }
+
+        .user-card h4 {
+            margin: 0 0 10px;
+        }
+
+        .user-card p {
+            color: #888;
+            margin: 0;
+            font-size: 14px;
+        }
+
+        /* HEADER */
+        .top-header {
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+            height: 75px;
+            background: rgba(10,10,10,.95);
+            backdrop-filter: blur(15px);
+            border-bottom: 1px solid #252525;
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 0 25px;
+        }
+
+        .brand {
+            font-size: 21px;
+            font-weight: bold;
+        }
+
+        .brand small {
+            color: #777;
+            font-size: 11px;
+            display: block;
+            margin-top: 3px;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            color: #aaa;
+        }
+
+        .logout-btn {
+            border: 1px solid #333;
+            background: #171717;
+            color: #fff;
+            border-radius: 10px;
+            padding: 9px 15px;
+            cursor: pointer;
+        }
+
+        .logout-btn:hover {
+            background: #252525;
+        }
+
+        /* SIDEBAR */
+        .layout {
+            display: flex;
+            min-height: calc(100vh - 75px);
+        }
+
+        .sidebar {
+            width: 240px;
+            background: #0d0d0d;
+            border-left: 1px solid #222;
+            padding: 25px 15px;
+        }
+
+        .menu-title {
+            color: #666;
+            font-size: 12px;
+            margin: 5px 12px 12px;
+        }
+
+        .menu-item {
+            width: 100%;
+            border: 0;
+            background: transparent;
+            color: #aaa;
+            padding: 13px 15px;
+            border-radius: 12px;
+            text-align: right;
+            margin-bottom: 6px;
+            cursor: pointer;
+        }
+
+        .menu-item:hover,
+        .menu-item.active {
+            background: #202020;
+            color: #fff;
+        }
+
+        .main-content {
+            flex: 1;
+            padding: 30px;
+            overflow: hidden;
+        }
+
+        /* MOBILE NAV */
+        .mobile-nav {
+            display: none;
+        }
+
+        /* GENERAL */
+        .page-title {
+            font-size: 28px;
+            margin-bottom: 8px;
+        }
+
+        .page-description {
+            color: #777;
+            margin-bottom: 28px;
+        }
+
+        .panel {
+            background: #121212;
+            border: 1px solid #292929;
+            border-radius: 20px;
+            padding: 22px;
+        }
+
+        /* CLASS CARDS */
+        .class-card {
+            background: #141414;
+            border: 1px solid #2c2c2c;
+            border-radius: 20px;
+            padding: 23px;
+            height: 100%;
+            transition: .25s;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .class-card:hover {
+            transform: translateY(-4px);
+            border-color: #666;
+            box-shadow: 0 12px 35px rgba(255,255,255,.05);
+        }
+
+        .class-icon {
+            width: 58px;
+            height: 58px;
+            background: #252525;
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 25px;
+            margin-bottom: 17px;
+        }
+
+        .class-card h4 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+
+        .class-card p {
+            color: #858585;
+            font-size: 13px;
+            min-height: 45px;
+        }
+
+        .class-stats {
+            display: flex;
+            gap: 7px;
+            margin: 15px 0;
+        }
+
+        .class-stat {
+            flex: 1;
+            background: #1d1d1d;
+            border-radius: 10px;
+            padding: 9px 5px;
+            text-align: center;
+            font-size: 11px;
+            color: #999;
+        }
+
+        .class-stat strong {
+            display: block;
+            color: #fff;
+            font-size: 16px;
+        }
+
+        .buy-btn,
+        .primary-btn {
+            border: 0;
+            background: #fff;
+            color: #000;
+            width: 100%;
+            border-radius: 12px;
+            padding: 12px;
+            cursor: pointer;
+            transition: .2s;
+            font-weight: bold;
+        }
+
+        .buy-btn:hover,
+        .primary-btn:hover {
+            background: #ddd;
+            transform: translateY(-1px);
+        }
+
+        .secondary-btn {
+            border: 1px solid #393939;
+            background: #1a1a1a;
+            color: #fff;
+            border-radius: 11px;
+            padding: 10px 15px;
+            cursor: pointer;
+        }
+
+        .secondary-btn:hover {
+            background: #262626;
+        }
+
+        /* STUDENTS */
+        .students-toolbar {
+            display: flex;
+            gap: 12px;
+            margin-bottom: 20px;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            position: relative;
+            flex: 1;
+            min-width: 220px;
+        }
+
+        .search-box i {
+            position: absolute;
+            right: 15px;
+            top: 13px;
+            color: #777;
+        }
+
+        .search-box input {
+            width: 100%;
+            height: 48px;
+            background: #151515;
+            border: 1px solid #303030;
+            border-radius: 12px;
+            color: #fff;
+            padding: 0 45px 0 15px;
+            outline: none;
+        }
+
+        .search-box input:focus {
+            border-color: #666;
+        }
+
+        .student-card {
+            background: #151515;
+            border: 1px solid #2d2d2d;
+            border-radius: 17px;
+            padding: 17px;
+            cursor: pointer;
+            transition: .2s;
+            height: 100%;
+        }
+
+        .student-card:hover {
+            border-color: #666;
+            transform: translateY(-3px);
+            background: #191919;
+        }
+
+        .student-number {
+            width: 37px;
+            height: 37px;
+            border-radius: 10px;
+            background: #252525;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            color: #bbb;
+            font-size: 13px;
+            margin-bottom: 13px;
+        }
+
+        .student-name {
+            font-size: 16px;
+            margin-bottom: 12px;
+        }
+
+        .student-mini-stats {
+            display: flex;
+            gap: 5px;
+        }
+
+        .mini-stat {
+            flex: 1;
+            background: #202020;
+            padding: 7px 4px;
+            text-align: center;
+            border-radius: 8px;
+            font-size: 10px;
+            color: #888;
+        }
+
+        .mini-stat strong {
+            display: block;
+            color: #fff;
+            font-size: 14px;
+        }
+
+        /* STUDENT PANEL */
+        .student-header {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            gap: 15px;
+            margin-bottom: 25px;
+            flex-wrap: wrap;
+        }
+
+        .student-header-title {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        .student-big-icon {
+            width: 65px;
+            height: 65px;
+            background: #242424;
+            border-radius: 17px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 28px;
+        }
+
+        .summary-card {
+            background: #151515;
+            border: 1px solid #2c2c2c;
+            border-radius: 16px;
+            padding: 20px;
+            text-align: center;
+            height: 100%;
+        }
+
+        .summary-card i {
+            font-size: 24px;
+            color: #aaa;
+        }
+
+        .summary-card strong {
+            display: block;
+            font-size: 27px;
+            margin-top: 8px;
+        }
+
+        .summary-card span {
+            color: #777;
+            font-size: 12px;
+        }
+
+        .section-box {
+            background: #121212;
+            border: 1px solid #292929;
+            border-radius: 18px;
+            padding: 22px;
+            margin-top: 20px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            margin-bottom: 18px;
+        }
+
+        .form-control,
+        .form-select {
+            background: #181818 !important;
+            color: #fff !important;
+            border: 1px solid #333 !important;
+            border-radius: 11px !important;
+            min-height: 45px;
+        }
+
+        .form-control:focus,
+        .form-select:focus {
+            box-shadow: none !important;
+            border-color: #777 !important;
+        }
+
+        .form-control::placeholder {
+            color: #666;
+        }
+
+        textarea.form-control {
+            min-height: 90px;
+        }
+
+        label {
+            color: #999;
+            font-size: 13px;
+            margin-bottom: 7px;
+        }
+
+        /* RECORD */
+        .record-item {
+            background: #191919;
+            border: 1px solid #2c2c2c;
+            border-radius: 13px;
+            padding: 14px;
+            margin-bottom: 9px;
+            display: flex;
+            justify-content: space-between;
+            gap: 12px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .record-right {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .record-icon {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            background: #252525;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .record-title {
+            font-size: 14px;
+        }
+
+        .record-note {
+            color: #777;
+            font-size: 11px;
+            margin-top: 3px;
+        }
+
+        .record-date {
+            color: #777;
+            font-size: 11px;
+        }
+
+        /* MODAL */
+        .modal-content {
+            background: #151515;
+            color: #fff;
+            border: 1px solid #333;
+            border-radius: 18px;
+        }
+
+        .modal-header {
+            border-bottom: 1px solid #2c2c2c;
+        }
+
+        .modal-footer {
+            border-top: 1px solid #2c2c2c;
+        }
+
+        .btn-close {
+            filter: invert(1);
+        }
+
+        /* TOAST */
+        #toastBox {
+            position: fixed;
+            bottom: 25px;
+            left: 25px;
+            z-index: 9999;
+        }
+
+        .toast-message {
+            background: #fff;
+            color: #000;
+            border-radius: 12px;
+            padding: 13px 20px;
+            margin-top: 8px;
+            box-shadow: 0 10px 30px rgba(0,0,0,.4);
+            animation: toastIn .25s ease;
+        }
+
+        @keyframes toastIn {
+            from {
+                transform: translateY(15px);
+                opacity: 0;
+            }
+
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        .empty-state {
+            text-align: center;
+            padding: 50px 20px;
+            color: #666;
+        }
+
+        .empty-state i {
+            font-size: 45px;
+            display: block;
+            margin-bottom: 15px;
+        }
+
+        .loading {
+            text-align: center;
+            padding: 35px;
+            color: #777;
+        }
+
+        @media(max-width: 800px) {
+            .sidebar {
+                display: none;
+            }
+
+            .main-content {
+                padding: 18px;
+                padding-bottom: 85px;
+            }
+
+            .mobile-nav {
+                display: flex;
+                position: fixed;
+                bottom: 0;
+                right: 0;
+                left: 0;
+                height: 65px;
+                background: #101010;
+                border-top: 1px solid #292929;
+                z-index: 1000;
+                justify-content: center;
+            }
+
+            .mobile-nav button {
+                flex: 1;
+                border: 0;
+                background: transparent;
+                color: #777;
+                font-family: inherit;
+            }
+
+            .mobile-nav button.active {
+                color: #fff;
+            }
+
+            .mobile-nav i {
+                display: block;
+                font-size: 20px;
+            }
+
+            .top-header {
+                padding: 0 15px;
+            }
+
+            .brand {
+                font-size: 17px;
+            }
+
+            .user-info span {
+                display: none;
+            }
+
+            .login-box {
+                padding: 22px;
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <!-- ================= LOGIN ================= -->
+
+    <div id="loginPage">
+
+        <div class="login-box">
+
+            <div class="login-title">
+                آموزش یار 13 ابان
+            </div>
+
+            <div class="login-subtitle">
+                ورود به سامانه آموزشی
+            </div>
+
+            <div class="row g-3">
+
+                <div class="col-md-4">
+                    <div class="user-card" onclick="selectUser(1)">
+                        <div class="user-icon">
+                            <i class="bi bi-people"></i>
+                        </div>
+                        <h4>والدین</h4>
+                        <p>مشاهده وضعیت آموزشی دانش‌آموز</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="user-card" onclick="selectUser(2)">
+                        <div class="user-icon">
+                            <i class="bi bi-person-workspace"></i>
+                        </div>
+                        <h4>دبیر</h4>
+                        <p>ثبت نمره و حضور و غیاب</p>
+                    </div>
+                </div>
+
+                <div class="col-md-4">
+                    <div class="user-card" onclick="selectUser(3)">
+                        <div class="user-icon">
+                            <i class="bi bi-person-gear"></i>
+                        </div>
+                        <h4>مدیر / معاون</h4>
+                        <p>مدیریت دانش‌آموزان و اطلاعات کلاس</p>
+                    </div>
+                </div>
+
+            </div>
+
+            <div id="passwordBox" style="display:none;margin-top:25px;">
+
+                <div class="panel">
+
+                    <label>رمز ورود</label>
+
+                    <input id="loginPassword"
+                        type="password"
+                        class="form-control"
+                        placeholder="رمز ورود را وارد کنید">
+
+                    <button class="primary-btn mt-3" onclick="loginWithPassword()">
+                        <i class="bi bi-box-arrow-in-left"></i>
+                        ورود
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= APP ================= -->
+
+    <div id="app" style="display:none;">
+
+        <header class="top-header">
+
+            <div class="brand">
+                آموزش یار 13 ابان
+                <small>سامانه مدیریت آموزشی</small>
+            </div>
+
+            <div class="user-info">
+                <i class="bi bi-person-circle"></i>
+                <span id="currentUserName"></span>
+
+                <button class="logout-btn" onclick="logout()">
+                    <i class="bi bi-box-arrow-right"></i>
+                    خروج
+                </button>
+            </div>
+
+        </header>
+
+
+        <div class="layout">
+
+            <aside class="sidebar">
+
+                <div class="menu-title">
+                    منوی اصلی
+                </div>
+
+                <button class="menu-item active" id="menuClasses" onclick="showPage('products')">
+                    <i class="bi bi-grid"></i>
+                    کلاس‌ها
+                </button>
+
+            </aside>
+
+
+            <main class="main-content">
+
+                <!-- ================= CLASSES ================= -->
+
+                <section id="products" class="page active">
+
+                    <div class="page-title">
+                        کلاس‌ها
+                    </div>
+
+                    <div class="page-description">
+                        کلاس مورد نظر را انتخاب کنید.
+                    </div>
+
+                    <div class="row g-3" id="classList"></div>
+
+                </section>
+
+
+                <!-- ================= STUDENTS ================= -->
+
+                <section id="students" class="page">
+
+                    <div class="student-header">
+
+                        <div>
+                            <div class="page-title" id="studentsTitle">
+                                دانش‌آموزان
+                            </div>
+
+                            <div class="page-description" style="margin-bottom:0;">
+                                فهرست دانش‌آموزان کلاس
+                            </div>
+                        </div>
+
+                        <button class="secondary-btn" onclick="showPage('products')">
+                            <i class="bi bi-arrow-right"></i>
+                            بازگشت به کلاس‌ها
+                        </button>
+
+                    </div>
+
+
+                    <div class="students-toolbar">
+
+                        <div class="search-box">
+                            <i class="bi bi-search"></i>
+
+                            <input
+                                id="studentSearch"
+                                type="text"
+                                placeholder="جستجوی نام دانش‌آموز..."
+                                oninput="renderStudents()">
+                        </div>
+
+                        <button
+                            id="addStudentBtn"
+                            class="secondary-btn"
+                            onclick="openStudentModal()"
+                            style="display:none;">
+                            <i class="bi bi-person-plus"></i>
+                            افزودن دانش‌آموز
+                        </button>
+
+                    </div>
+
+
+                    <div id="studentsLoading" class="loading" style="display:none;">
+                        <i class="bi bi-arrow-repeat"></i>
+                        در حال دریافت اطلاعات...
+                    </div>
+
+                    <div class="row g-3" id="studentsList"></div>
+
+                </section>
+
+
+                <!-- ================= STUDENT PANEL ================= -->
+
+                <section id="studentPanel" class="page">
+
+                    <div class="student-header">
+
+                        <div class="student-header-title">
+
+                            <div class="student-big-icon">
+                                <i class="bi bi-person"></i>
+                            </div>
+
+                            <div>
+                                <div class="page-title" id="panelStudentName">
+                                    دانش‌آموز
+                                </div>
+
+                                <div class="page-description" id="panelClassName"
+                                    style="margin:0;">
+                                </div>
+                            </div>
+
+                        </div>
+
+
+                        <div style="display:flex;gap:8px;flex-wrap:wrap;">
+
+                            <button class="secondary-btn" onclick="showPage('students')">
+                                <i class="bi bi-arrow-right"></i>
+                                بازگشت
+                            </button>
+
+                            <button
+                                id="editStudentPanelBtn"
+                                class="secondary-btn"
+                                onclick="openEditCurrentStudent()"
+                                style="display:none;">
+                                <i class="bi bi-pencil"></i>
+                                ویرایش نام
+                            </button>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- SUMMARY -->
+
+                    <div class="row g-3">
+
+                        <div class="col-6 col-md-3">
+                            <div class="summary-card">
+                                <i class="bi bi-plus-circle"></i>
+                                <strong id="positiveCount">0</strong>
+                                <span>نمره‌های مثبت</span>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-3">
+                            <div class="summary-card">
+                                <i class="bi bi-dash-circle"></i>
+                                <strong id="negativeCount">0</strong>
+                                <span>نمره‌های منفی</span>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-3">
+                            <div class="summary-card">
+                                <i class="bi bi-check-circle"></i>
+                                <strong id="presentCount">0</strong>
+                                <span>حضور</span>
+                            </div>
+                        </div>
+
+                        <div class="col-6 col-md-3">
+                            <div class="summary-card">
+                                <i class="bi bi-x-circle"></i>
+                                <strong id="absentCount">0</strong>
+                                <span>غیبت</span>
+                            </div>
+                        </div>
+
+                    </div>
+
+
+                    <!-- RECORD GRADE -->
+
+                    <div class="section-box">
+
+                        <div class="section-title">
+                            <i class="bi bi-pencil-square"></i>
+                            ثبت نمره
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-3">
+
+                                <label>نوع نمره</label>
+
+                                <select id="gradeType" class="form-select">
+                                    <option value="positive">
+                                        نمره مثبت
+                                    </option>
+
+                                    <option value="negative">
+                                        نمره منفی
+                                    </option>
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-md-3">
+
+                                <label>مقدار نمره</label>
+
+                                <input
+                                    id="gradeValue"
+                                    type="number"
+                                    class="form-control"
+                                    placeholder="مثلاً 1">
+
+                            </div>
+
+
+                            <div class="col-md-6">
+
+                                <label>توضیحات</label>
+
+                                <input
+                                    id="gradeNote"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="توضیح نمره...">
+
+                            </div>
+
+
+                            <div class="col-12">
+
+                                <button class="primary-btn" onclick="recordGrade()">
+                                    <i class="bi bi-check2-circle"></i>
+                                    ثبت نمره
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- ATTENDANCE -->
+
+                    <div class="section-box">
+
+                        <div class="section-title">
+                            <i class="bi bi-calendar-check"></i>
+                            حضور و غیاب
+                        </div>
+
+                        <div class="row g-3">
+
+                            <div class="col-md-4">
+
+                                <label>وضعیت</label>
+
+                                <select id="attendanceStatus" class="form-select">
+
+                                    <option value="present">
+                                        حاضر
+                                    </option>
+
+                                    <option value="absent">
+                                        غایب
+                                    </option>
+
+                                    <option value="late">
+                                        تأخیر
+                                    </option>
+
+                                </select>
+
+                            </div>
+
+
+                            <div class="col-md-8">
+
+                                <label>توضیحات</label>
+
+                                <input
+                                    id="attendanceNote"
+                                    type="text"
+                                    class="form-control"
+                                    placeholder="توضیح...">
+
+                            </div>
+
+
+                            <div class="col-12">
+
+                                <button class="primary-btn" onclick="recordAttendance()">
+                                    <i class="bi bi-calendar-plus"></i>
+                                    ثبت حضور و غیاب
+                                </button>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+
+                    <!-- HISTORY -->
+
+                    <div class="section-box">
+
+                        <div class="section-title">
+                            <i class="bi bi-clock-history"></i>
+                            سوابق دانش‌آموز
+                        </div>
+
+                        <div id="recordsList"></div>
+
+                    </div>
+
+                </section>
+
+
+                <!-- ================= OLD ORDER PAGES ================= -->
+
+                <section id="detail" class="page">
+
+                    <div class="page-title">
+                        اطلاعات کلاس
+                    </div>
+
+                    <div class="panel mt-4">
+                        <h4 id="detailTitle"></h4>
+                        <p id="detailDescription" class="text-secondary mt-3"></p>
+
+                        <button class="primary-btn mt-3" onclick="openStudents(currentClassId)">
+                            <i class="bi bi-people"></i>
+                            مشاهده دانش‌آموزان
+                        </button>
+                    </div>
+
+                </section>
+
+
+                <section id="orderIntro" class="page">
+
+                    <div class="page-title">
+                        پذیرش و ادامه
+                    </div>
+
+                    <div class="panel mt-4">
+
+                        <p>
+                            برای ادامه ثبت اطلاعات، گزینه زیر را انتخاب کنید.
+                        </p>
+
+                        <button class="primary-btn mt-3" onclick="showPage('order')">
+                            پذیرش و ادامه
+                        </button>
+
+                    </div>
+
+                </section>
+
+
+                <section id="order" class="page">
+
+                    <div class="page-title">
+                        ثبت سفارش
+                    </div>
+
+                    <div class="panel mt-4">
+
+                        <div class="row g-3">
+
+                            <div class="col-md-6">
+                                <label>نام و نام خانوادگی</label>
+                                <input id="orderName" class="form-control">
+                            </div>
+
+                            <div class="col-md-6">
+                                <label>شماره تماس</label>
+                                <input id="orderPhone" class="form-control">
+                            </div>
+
+                            <div class="col-12">
+                                <label>توضیحات</label>
+                                <textarea id="orderDescription"
+                                    class="form-control"></textarea>
+                            </div>
+
+                            <div class="col-12">
+                                <button class="primary-btn" onclick="submitOrder()">
+                                    ثبت اطلاعات
+                                </button>
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                </section>
+
+
+                <section id="success" class="page">
+
+                    <div class="panel text-center" style="padding:60px 20px;">
+
+                        <i class="bi bi-check-circle"
+                            style="font-size:70px;color:#aaa;"></i>
+
+                        <h3 class="mt-3">
+                            عملیات با موفقیت انجام شد
+                        </h3>
+
+                        <button class="primary-btn mt-4"
+                            onclick="showPage('products')">
+                            بازگشت به کلاس‌ها
+                        </button>
+
+                    </div>
+
+                </section>
+
+            </main>
+
+        </div>
+
+
+        <!-- MOBILE NAV -->
+
+        <div class="mobile-nav">
+
+            <button class="active" id="mobileClasses"
+                onclick="showPage('products')">
+                <i class="bi bi-grid"></i>
+                کلاس‌ها
+            </button>
+
+        </div>
+
+    </div>
+
+
+    <!-- ================= STUDENT MODAL ================= -->
+
+    <div class="modal fade" id="studentModal" tabindex="-1">
+
+        <div class="modal-dialog modal-dialog-centered">
+
+            <div class="modal-content">
+
+                <div class="modal-header">
+
+                    <h5 class="modal-title" id="studentModalTitle">
+                        افزودن دانش‌آموز
+                    </h5>
+
+                    <button type="button"
+                        class="btn-close"
+                        data-bs-dismiss="modal"></button>
+
+                </div>
+
+
+                <div class="modal-body">
+
+                    <input type="hidden" id="editStudentId">
+
+                    <label>
+                        نام و نام خانوادگی دانش‌آموز
+                    </label>
+
+                    <input
+                        id="studentNameInput"
+                        class="form-control"
+                        placeholder="نام دانش‌آموز را وارد کنید">
+
+                </div>
+
+
+                <div class="modal-footer">
+
+                    <button
+                        class="secondary-btn"
+                        data-bs-dismiss="modal">
+                        انصراف
+                    </button>
+
+                    <button
+                        class="primary-btn"
+                        style="width:auto;padding:10px 30px;"
+                        onclick="saveStudent()">
+                        ذخیره
+                    </button>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+
+    <div id="toastBox"></div>
+
+
+    <script src="bootstrap-5.0.2-dist/js/bootstrap.bundle.min.js"></script>
+
+    <script>
+
+        /* =========================================================
+           تنظیمات
+        ========================================================= */
+
+        const SCRIPT_URL =
+            "https://script.google.com/macros/s/AKfycbxqdaA0xQaPw9wGRodR41dzvy9RXdQ9mDjwBWj7__BwLgqAHuHVVij6dCKfrwB_LFkl/exec";
+
+
+        const USERS = {
+
+            1: {
+                name: "والدین",
+                password: null
+            },
+
+            2: {
+                name: "دبیر",
+                password: "9999"
+            },
+
+            3: {
+                name: "مدیر / معاون",
+                password: "1111"
+            }
+
+        };
+
+
+        const classes = [
+
+            {
+                id: "class1",
+                title: "کلاس ۱",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۱"
+            },
+
+            {
+                id: "class2",
+                title: "کلاس ۲",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۲"
+            },
+
+            {
+                id: "class3",
+                title: "کلاس ۳",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۳"
+            },
+
+            {
+                id: "class4",
+                title: "کلاس ۴",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۴"
+            },
+
+            {
+                id: "class5",
+                title: "کلاس ۵",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۵"
+            },
+
+            {
+                id: "class6",
+                title: "کلاس ۶",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۶"
+            },
+
+            {
+                id: "class7",
+                title: "کلاس ۷",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۷"
+            },
+
+            {
+                id: "class8",
+                title: "کلاس ۸",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۸"
+            },
+
+            {
+                id: "class9",
+                title: "کلاس ۹",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۹"
+            },
+
+            {
+                id: "class10",
+                title: "کلاس ۱۰",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۱۰"
+            },
+
+            {
+                id: "class11",
+                title: "کلاس ۱۱",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۱۱"
+            },
+
+            {
+                id: "class12",
+                title: "کلاس ۱۲",
+                description: "مدیریت و ثبت اطلاعات آموزشی دانش‌آموزان کلاس ۱۲"
+            }
+
+        ];
+
+
+        let currentUser = null;
+        let currentClassId = null;
+        let currentStudent = null;
+
+        let students = [];
+        let records = [];
+
+
+        /* =========================================================
+           LOGIN
+        ========================================================= */
+
+        function selectUser(id) {
+
+            if (id === 1) {
+
+                currentUser = id;
+
+                sessionStorage.setItem(
+                    "craftTableUser",
+                    String(id)
+                );
+
+                enterApp();
+
+                return;
+            }
+
+            document.getElementById("passwordBox").style.display = "block";
+
+            document.getElementById("loginPassword").value = "";
+
+            document.getElementById("loginPassword").focus();
+
+            document.getElementById("loginPassword").dataset.user =
+                String(id);
+        }
+
+
+        function loginWithPassword() {
+
+            const password =
+                document.getElementById("loginPassword").value;
+
+            const userId =
+                Number(
+                    document.getElementById("loginPassword").dataset.user
+                );
+
+            if (
+                USERS[userId] &&
+                USERS[userId].password === password
+            ) {
+
+                currentUser = userId;
+
+                sessionStorage.setItem(
+                    "craftTableUser",
+                    String(userId)
+                );
+
+                enterApp();
+
+            } else {
+
+                showToast("رمز ورود صحیح نیست.");
+
+            }
+
+        }
+
+
+        function enterApp() {
+
+            document.getElementById("loginPage").style.display = "none";
+
+            document.getElementById("app").style.display = "block";
+
+            document.getElementById("currentUserName").textContent =
+                USERS[currentUser].name;
+
+            document.getElementById("addStudentBtn").style.display =
+                currentUser === 3 ? "block" : "none";
+
+            document.getElementById("editStudentPanelBtn").style.display =
+                currentUser === 3 ? "block" : "none";
+
+            renderClasses();
+
+            showPage("products");
+        }
+
+
+        function logout() {
+
+            sessionStorage.removeItem("craftTableUser");
+
+            location.reload();
+
+        }
+
+
+        /* =========================================================
+           PAGES
+        ========================================================= */
+
+        function showPage(pageId) {
+
+            document.querySelectorAll(".page").forEach(page => {
+                page.classList.remove("active");
+            });
+
+            const page = document.getElementById(pageId);
+
+            if (page) {
+                page.classList.add("active");
+            }
+
+            if (pageId === "products") {
+
+                document
+                    .getElementById("menuClasses")
+                    ?.classList.add("active");
+
+                document
+                    .getElementById("mobileClasses")
+                    ?.classList.add("active");
+
+            }
+
+        }
+
+
+        /* =========================================================
+           CLASS LIST
+        ========================================================= */
+
+        function renderClasses() {
+
+            const container =
+                document.getElementById("classList");
+
+            container.innerHTML = "";
+
+            classes.forEach((item, index) => {
+
+                container.innerHTML += `
+
+                    <div class="col-12 col-md-6 col-xl-4">
+
+                        <div class="class-card">
+
+                            <div class="class-icon">
+                                <i class="bi bi-grid-1x2-fill"></i>
+                            </div>
+
+                            <h4>
+                                ${item.title}
+                            </h4>
+
+                            <p>
+                                ${item.description}
+                            </p>
+
+                            <div class="class-stats">
+
+                                <div class="class-stat">
+                                    <strong id="classCount_${item.id}">
+                                        -
+                                    </strong>
+                                    دانش‌آموز
+                                </div>
+
+                                <div class="class-stat">
+                                    <strong>
+                                        ${index + 1}
+                                    </strong>
+                                    شماره کلاس
+                                </div>
+
+                            </div>
+
+                            <button
+                                class="buy-btn"
+                                onclick="openStudents('${item.id}')">
+
+                                <i class="bi bi-people"></i>
+
+                                ثبت نمره
+
+                            </button>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            });
+
+            updateClassCounts();
+
+        }
+
+
+        /* =========================================================
+           STUDENTS
+        ========================================================= */
+
+        async function openStudents(classId) {
+
+            currentClassId = classId;
+
+            const classInfo =
+                classes.find(x => x.id === classId);
+
+            document.getElementById("studentsTitle").textContent =
+                classInfo ? classInfo.title + " - دانش‌آموزان" : "دانش‌آموزان";
+
+            document.getElementById("studentSearch").value = "";
+
+            showPage("students");
+
+            await loadStudents();
+
+        }
+
+
+        async function loadStudents() {
+
+            const loading =
+                document.getElementById("studentsLoading");
+
+            loading.style.display = "block";
+
+            document.getElementById("studentsList").innerHTML = "";
+
+            try {
+
+                const response =
+                    await fetch(
+                        SCRIPT_URL +
+                        "?action=getStudents&classId=" +
+                        encodeURIComponent(currentClassId)
+                    );
+
+                const result =
+                    await response.json();
+
+                if (
+                    result &&
+                    result.success &&
+                    Array.isArray(result.students)
+                ) {
+
+                    students = result.students;
+
+                } else {
+
+                    students = [];
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                showToast(
+                    "دریافت اطلاعات انجام نشد. اتصال اینترنت و Apps Script را بررسی کنید."
+                );
+
+                students = [];
+
+            }
+
+            loading.style.display = "none";
+
+            renderStudents();
+
+            updateClassCounts();
+
+        }
+
+
+        function renderStudents() {
+
+            const container =
+                document.getElementById("studentsList");
+
+            const search =
+                document
+                    .getElementById("studentSearch")
+                    .value
+                    .trim()
+                    .toLowerCase();
+
+            const filtered =
+                students.filter(student =>
+                    String(student.name || "")
+                        .toLowerCase()
+                        .includes(search)
+                );
+
+
+            if (filtered.length === 0) {
+
+                container.innerHTML = `
+
+                    <div class="col-12">
+
+                        <div class="empty-state">
+
+                            <i class="bi bi-person-x"></i>
+
+                            دانش‌آموزی پیدا نشد.
+
+                        </div>
+
+                    </div>
+
+                `;
+
+                return;
+            }
+
+
+            container.innerHTML = "";
+
+
+            filtered.forEach((student, index) => {
+
+                const originalIndex =
+                    students.findIndex(
+                        x => String(x.id) === String(student.id)
+                    );
+
+                container.innerHTML += `
+
+                    <div class="col-12 col-sm-6 col-lg-4 col-xl-3">
+
+                        <div
+                            class="student-card"
+                            onclick="openStudentPanel('${student.id}')">
+
+                            <div class="student-number">
+                                ${originalIndex + 1}
+                            </div>
+
+                            <div class="student-name">
+                                ${escapeHtml(
+                                    student.name || "بدون نام"
+                                )}
+                            </div>
+
+                            <div class="student-mini-stats">
+
+                                <div class="mini-stat">
+
+                                    <strong>
+                                        ${Number(student.positiveGrades || 0)}
+                                    </strong>
+
+                                    مثبت
+
+                                </div>
+
+                                <div class="mini-stat">
+
+                                    <strong>
+                                        ${Number(student.negativeGrades || 0)}
+                                    </strong>
+
+                                    منفی
+
+                                </div>
+
+                                <div class="mini-stat">
+
+                                    <strong>
+                                        ${Number(student.absent || 0)}
+                                    </strong>
+
+                                    غیبت
+
+                                </div>
+
+                            </div>
+
+                        </div>
+
+                    </div>
+
+                `;
+
+            });
+
+        }
+
+
+        /* =========================================================
+           STUDENT PANEL
+        ========================================================= */
+
+        async function openStudentPanel(studentId) {
+
+            const student =
+                students.find(
+                    x => String(x.id) === String(studentId)
+                );
+
+            if (!student) {
+
+                showToast("اطلاعات دانش‌آموز پیدا نشد.");
+
+                return;
+
+            }
+
+            currentStudent = student;
+
+            document.getElementById("panelStudentName").textContent =
+                student.name || "بدون نام";
+
+            const classInfo =
+                classes.find(x => x.id === currentClassId);
+
+            document.getElementById("panelClassName").textContent =
+                classInfo ? classInfo.title : "";
+
+            updateStudentSummary();
+
+            showPage("studentPanel");
+
+            await loadRecords(student.id);
+
+        }
+
+
+        function updateStudentSummary() {
+
+            if (!currentStudent) {
+                return;
+            }
+
+            document.getElementById("positiveCount").textContent =
+                Number(currentStudent.positiveGrades || 0);
+
+            document.getElementById("negativeCount").textContent =
+                Number(currentStudent.negativeGrades || 0);
+
+            document.getElementById("presentCount").textContent =
+                Number(currentStudent.present || 0);
+
+            document.getElementById("absentCount").textContent =
+                Number(currentStudent.absent || 0);
+
+        }
+
+
+        async function loadRecords(studentId) {
+
+            const container =
+                document.getElementById("recordsList");
+
+            container.innerHTML = `
+                <div class="loading">
+                    در حال دریافت سوابق...
+                </div>
+            `;
+
+            try {
+
+                const response =
+                    await fetch(
+                        SCRIPT_URL +
+                        "?action=getRecords&studentId=" +
+                        encodeURIComponent(studentId)
+                    );
+
+                const result =
+                    await response.json();
+
+                records =
+                    result &&
+                    result.success &&
+                    Array.isArray(result.records)
+                        ? result.records
+                        : [];
+
+            } catch (error) {
+
+                console.error(error);
+
+                records = [];
+
+            }
+
+            renderRecords();
+
+        }
+
+
+        function renderRecords() {
+
+            const container =
+                document.getElementById("recordsList");
+
+            if (!records.length) {
+
+                container.innerHTML = `
+
+                    <div class="empty-state">
+
+                        <i class="bi bi-clock-history"></i>
+
+                        هنوز سابقه‌ای برای این دانش‌آموز ثبت نشده است.
+
+                    </div>
+
+                `;
+
+                return;
+
+            }
+
+
+            container.innerHTML = "";
+
+
+            records
+                .slice()
+                .reverse()
+                .forEach(record => {
+
+                    let title = "";
+                    let icon = "bi-info-circle";
+
+                    if (record.type === "grade_positive") {
+                        title =
+                            "نمره مثبت: " +
+                            (record.value || "1");
+
+                        icon = "bi-plus-circle";
+                    }
+
+                    else if (record.type === "grade_negative") {
+                        title =
+                            "نمره منفی: " +
+                            (record.value || "1");
+
+                        icon = "bi-dash-circle";
+                    }
+
+                    else if (record.type === "attendance_present") {
+                        title = "حضور";
+                        icon = "bi-check-circle";
+                    }
+
+                    else if (record.type === "attendance_absent") {
+                        title = "غیبت";
+                        icon = "bi-x-circle";
+                    }
+
+                    else if (record.type === "attendance_late") {
+                        title = "تأخیر";
+                        icon = "bi-clock";
+                    }
+
+
+                    container.innerHTML += `
+
+                        <div class="record-item">
+
+                            <div class="record-right">
+
+                                <div class="record-icon">
+                                    <i class="bi ${icon}"></i>
+                                </div>
+
+                                <div>
+
+                                    <div class="record-title">
+                                        ${escapeHtml(title)}
+                                    </div>
+
+                                    ${
+                                        record.note
+                                            ? `
+                                                <div class="record-note">
+                                                    ${escapeHtml(record.note)}
+                                                </div>
+                                            `
+                                            : ""
+                                    }
+
+                                </div>
+
+                            </div>
+
+                            <div class="record-date">
+                                ${escapeHtml(
+                                    record.date || ""
+                                )}
+                            </div>
+
+                        </div>
+
+                    `;
+
+                });
+
+        }
+
+
+        /* =========================================================
+           RECORD GRADE
+        ========================================================= */
+
+        async function recordGrade() {
+
+            if (!currentStudent) {
+                return;
+            }
+
+            if (currentUser === 1) {
+
+                showToast("والدین اجازه ثبت نمره ندارند.");
+
+                return;
+
+            }
+
+
+            const type =
+                document.getElementById("gradeType").value;
+
+            const value =
+                document.getElementById("gradeValue").value.trim();
+
+            const note =
+                document.getElementById("gradeNote").value.trim();
+
+
+            if (!value) {
+
+                showToast("مقدار نمره را وارد کنید.");
+
+                return;
+
+            }
+
+
+            const data = {
+
+                action: "recordGrade",
+
+                studentId: currentStudent.id,
+
+                classId: currentClassId,
+
+                type: type,
+
+                value: value,
+
+                note: note,
+
+                date: getToday(),
+
+                userId: currentUser
+
+            };
+
+
+            try {
+
+                const response =
+                    await postData(data);
+
+                if (!response.success) {
+
+                    showToast(
+                        response.message ||
+                        "ثبت نمره انجام نشد."
+                    );
+
+                    return;
+
+                }
+
+
+                currentStudent =
+                    response.student || currentStudent;
+
+
+                const index =
+                    students.findIndex(
+                        x =>
+                            String(x.id) ===
+                            String(currentStudent.id)
+                    );
+
+
+                if (index !== -1) {
+                    students[index] = currentStudent;
+                }
+
+
+                updateStudentSummary();
+
+                document.getElementById("gradeValue").value = "";
+
+                document.getElementById("gradeNote").value = "";
+
+                await loadRecords(currentStudent.id);
+
+                renderStudents();
+
+                updateClassCounts();
+
+
+                if (type === "negative") {
+
+                    showToast(
+                        "نمره منفی ثبت شد. نمره‌های منفی: " +
+                        Number(currentStudent.negativeGrades || 0)
+                    );
+
+                } else {
+
+                    showToast("نمره مثبت با موفقیت ثبت شد.");
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                showToast("خطا در ثبت نمره.");
+
+            }
+
+        }
+
+
+        /* =========================================================
+           ATTENDANCE
+        ========================================================= */
+
+        async function recordAttendance() {
+
+            if (!currentStudent) {
+                return;
+            }
+
+            if (currentUser === 1) {
+
+                showToast("والدین اجازه ثبت حضور و غیاب ندارند.");
+
+                return;
+
+            }
+
+
+            const status =
+                document.getElementById("attendanceStatus").value;
+
+            const note =
+                document.getElementById("attendanceNote").value.trim();
+
+
+            try {
+
+                const response =
+                    await postData({
+
+                        action: "recordAttendance",
+
+                        studentId: currentStudent.id,
+
+                        classId: currentClassId,
+
+                        status: status,
+
+                        note: note,
+
+                        date: getToday(),
+
+                        userId: currentUser
+
+                    });
+
+
+                if (!response.success) {
+
+                    showToast(
+                        response.message ||
+                        "ثبت حضور و غیاب انجام نشد."
+                    );
+
+                    return;
+
+                }
+
+
+                currentStudent =
+                    response.student || currentStudent;
+
+
+                const index =
+                    students.findIndex(
+                        x =>
+                            String(x.id) ===
+                            String(currentStudent.id)
+                    );
+
+
+                if (index !== -1) {
+                    students[index] = currentStudent;
+                }
+
+
+                updateStudentSummary();
+
+                document.getElementById("attendanceNote").value = "";
+
+                await loadRecords(currentStudent.id);
+
+                renderStudents();
+
+                updateClassCounts();
+
+
+                showToast("حضور و غیاب ثبت شد.");
+
+            } catch (error) {
+
+                console.error(error);
+
+                showToast("خطا در ثبت حضور و غیاب.");
+
+            }
+
+        }
+
+
+        /* =========================================================
+           ADD / EDIT STUDENT
+        ========================================================= */
+
+        function openStudentModal(studentId = "") {
+
+            if (currentUser !== 3) {
+
+                showToast("فقط مدیر / معاون می‌تواند نام دانش‌آموزان را مدیریت کند.");
+
+                return;
+
+            }
+
+
+            document.getElementById("editStudentId").value =
+                studentId || "";
+
+            if (studentId) {
+
+                const student =
+                    students.find(
+                        x =>
+                            String(x.id) ===
+                            String(studentId)
+                    );
+
+                document.getElementById("studentModalTitle").textContent =
+                    "ویرایش دانش‌آموز";
+
+                document.getElementById("studentNameInput").value =
+                    student ? student.name : "";
+
+            } else {
+
+                document.getElementById("studentModalTitle").textContent =
+                    "افزودن دانش‌آموز";
+
+                document.getElementById("studentNameInput").value = "";
+
+            }
+
+
+            const modal =
+                new bootstrap.Modal(
+                    document.getElementById("studentModal")
+                );
+
+            modal.show();
+
+        }
+
+
+        function openEditCurrentStudent() {
+
+            if (!currentStudent) {
+                return;
+            }
+
+            openStudentModal(currentStudent.id);
+
+        }
+
+
+        async function saveStudent() {
+
+            if (currentUser !== 3) {
+                return;
+            }
+
+
+            const studentId =
+                document.getElementById("editStudentId").value;
+
+            const name =
+                document.getElementById("studentNameInput")
+                    .value
+                    .trim();
+
+
+            if (!name) {
+
+                showToast("نام دانش‌آموز را وارد کنید.");
+
+                return;
+
+            }
+
+
+            try {
+
+                const response =
+                    await postData({
+
+                        action: "saveStudent",
+
+                        id: studentId,
+
+                        classId: currentClassId,
+
+                        name: name,
+
+                        userId: currentUser
+
+                    });
+
+
+                if (!response.success) {
+
+                    showToast(
+                        response.message ||
+                        "ذخیره انجام نشد."
+                    );
+
+                    return;
+
+                }
+
+
+                bootstrap.Modal
+                    .getInstance(
+                        document.getElementById("studentModal")
+                    )
+                    ?.hide();
+
+
+                showToast("اطلاعات دانش‌آموز ذخیره شد.");
+
+                await loadStudents();
+
+
+                if (
+                    currentStudent &&
+                    studentId &&
+                    String(currentStudent.id) === String(studentId)
+                ) {
+
+                    const updated =
+                        students.find(
+                            x =>
+                                String(x.id) ===
+                                String(studentId)
+                        );
+
+                    if (updated) {
+
+                        currentStudent = updated;
+
+                        document.getElementById(
+                            "panelStudentName"
+                        ).textContent =
+                            updated.name;
+
+                        updateStudentSummary();
+
+                    }
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                showToast("خطا در ذخیره دانش‌آموز.");
+
+            }
+
+        }
+
+
+        /* =========================================================
+           API
+        ========================================================= */
+
+        async function postData(data) {
+
+            const response =
+                await fetch(
+                    SCRIPT_URL,
+                    {
+                        method: "POST",
+
+                        headers: {
+                            "Content-Type":
+                                "text/plain;charset=utf-8"
+                        },
+
+                        body: JSON.stringify(data)
+                    }
+                );
+
+            return await response.json();
+
+        }
+
+
+        /* =========================================================
+           CLASS COUNTS
+        ========================================================= */
+
+        async function updateClassCounts() {
+
+            classes.forEach(async item => {
+
+                try {
+
+                    const response =
+                        await fetch(
+                            SCRIPT_URL +
+                            "?action=getStudents&classId=" +
+                            encodeURIComponent(item.id)
+                        );
+
+                    const result =
+                        await response.json();
+
+                    const count =
+                        result &&
+                        result.success &&
+                        Array.isArray(result.students)
+                            ? result.students.length
+                            : 0;
+
+                    const element =
+                        document.getElementById(
+                            "classCount_" + item.id
+                        );
+
+                    if (element) {
+                        element.textContent = count;
+                    }
+
+                } catch (error) {
+
+                    const element =
+                        document.getElementById(
+                            "classCount_" + item.id
+                        );
+
+                    if (element) {
+                        element.textContent = "-";
+                    }
+
+                }
+
+            });
+
+        }
+
+
+        /* =========================================================
+           DETAIL
+        ========================================================= */
+
+        function openProduct(classId) {
+
+            currentClassId = classId;
+
+            const item =
+                classes.find(x => x.id === classId);
+
+            if (!item) {
+                return;
+            }
+
+            document.getElementById("detailTitle").textContent =
+                item.title;
+
+            document.getElementById("detailDescription").textContent =
+                item.description;
+
+            showPage("detail");
+
+        }
+
+
+        /* =========================================================
+           ORDER
+        ========================================================= */
+
+        async function submitOrder() {
+
+            const name =
+                document.getElementById("orderName").value.trim();
+
+            const phone =
+                document.getElementById("orderPhone").value.trim();
+
+            const description =
+                document.getElementById("orderDescription")
+                    .value
+                    .trim();
+
+
+            if (!name || !phone) {
+
+                showToast("نام و شماره تماس را وارد کنید.");
+
+                return;
+
+            }
+
+
+            try {
+
+                const result =
+                    await postData({
+
+                        action: "submitOrder",
+
+                        name: name,
+
+                        phone: phone,
+
+                        description: description,
+
+                        classId: currentClassId,
+
+                        userId: currentUser,
+
+                        date: getToday()
+
+                    });
+
+
+                if (result.success) {
+
+                    showPage("success");
+
+                } else {
+
+                    showToast(
+                        result.message ||
+                        "ثبت اطلاعات انجام نشد."
+                    );
+
+                }
+
+            } catch (error) {
+
+                console.error(error);
+
+                showToast("خطا در ثبت اطلاعات.");
+
+            }
+
+        }
+
+
+        /* =========================================================
+           HELPERS
+        ========================================================= */
+
+        function getToday() {
+
+            const d = new Date();
+
+            const y =
+                d.getFullYear();
+
+            const m =
+                String(d.getMonth() + 1)
+                    .padStart(2, "0");
+
+            const day =
+                String(d.getDate())
+                    .padStart(2, "0");
+
+            return `${y}/${m}/${day}`;
+
+        }
+
+
+        function escapeHtml(value) {
+
+            return String(value ?? "")
+                .replace(/&/g, "&amp;")
+                .replace(/</g, "&lt;")
+                .replace(/>/g, "&gt;")
+                .replace(/"/g, "&quot;")
+                .replace(/'/g, "&#039;");
+
+        }
+
+
+        function showToast(message) {
+
+            const box =
+                document.getElementById("toastBox");
+
+            const item =
+                document.createElement("div");
+
+            item.className =
+                "toast-message";
+
+            item.textContent =
+                message;
+
+            box.appendChild(item);
+
+            setTimeout(() => {
+
+                item.remove();
+
+            }, 3000);
+
+        }
+
+
+        /* =========================================================
+           START
+        ========================================================= */
+
+        window.addEventListener("DOMContentLoaded", () => {
+
+            const savedUser =
+                sessionStorage.getItem("craftTableUser");
+
+            if (savedUser && USERS[savedUser]) {
+
+                currentUser =
+                    Number(savedUser);
+
+                enterApp();
+
+            } else {
+
+                document.getElementById("loginPage").style.display =
+                    "flex";
+
+                document.getElementById("app").style.display =
+                    "none";
+
+            }
+
+        });
+
+    </script>
+
+</body>
+
+</html>
