@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="theme-color" content="#0a0a0a">
 
-    <title>آموزش یار 13 ابان</title>
+    <title>آموزشیار 13 ابان</title>
 
     <link rel="stylesheet" href="bootstrap.min.css">
     <link rel="stylesheet"
@@ -927,6 +927,15 @@
                                 ویرایش نام
                             </button>
 
+                            <button
+                                id="changeStudentPasswordBtn"
+                                class="secondary-btn"
+                                onclick="openStudentPasswordModal()"
+                                style="display:none;">
+                                <i class="bi bi-key"></i>
+                                تغییر رمز کارنامه
+                            </button>
+
                         </div>
 
                     </div>
@@ -973,7 +982,7 @@
 
                     <!-- RECORD GRADE -->
 
-                    <div class="section-box">
+                    <div id="gradeSection" class="section-box">
 
                         <div class="section-title">
                             <i class="bi bi-pencil-square"></i>
@@ -1041,7 +1050,7 @@
 
                     <!-- ATTENDANCE -->
 
-                    <div class="section-box">
+                    <div id="attendanceSection" class="section-box">
 
                         <div class="section-title">
                             <i class="bi bi-calendar-check"></i>
@@ -1105,8 +1114,8 @@
                     <div class="section-box">
 
                         <div class="section-title">
-                            <i class="bi bi-clock-history"></i>
-                            سوابق دانش‌آموز
+                            <i class="bi bi-card-checklist"></i>
+                            کارنامه و سوابق آموزشی
                         </div>
 
                         <div id="recordsList"></div>
@@ -1295,6 +1304,60 @@
 
         </div>
 
+    </div>
+
+
+    <!-- ================= REPORT CARD PASSWORD MODAL ================= -->
+
+    <div class="modal fade" id="reportPasswordModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">مشاهده کارنامه</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="reportPasswordStudentName" style="color:#aaa;"></p>
+                    <label>رمز کارنامه دانش‌آموز</label>
+                    <input id="reportCardPassword" type="password" inputmode="numeric" class="form-control" placeholder="رمز کارنامه را وارد کنید">
+                    <div style="color:#777;font-size:12px;margin-top:10px;">رمز پیش‌فرض دانش‌آموزان: 1111</div>
+                </div>
+                <div class="modal-footer">
+                    <button class="secondary-btn" data-bs-dismiss="modal">انصراف</button>
+                    <button class="primary-btn" style="width:auto;padding:10px 30px;" onclick="verifyAndOpenReport()">
+                        <i class="bi bi-eye"></i>
+                        مشاهده کارنامه
+                    </button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- ================= CHANGE STUDENT PASSWORD MODAL ================= -->
+
+    <div class="modal fade" id="studentPasswordModal" tabindex="-1">
+        <div class="modal-dialog modal-dialog-centered">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title">تغییر رمز کارنامه</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal"></button>
+                </div>
+                <div class="modal-body">
+                    <p id="changePasswordStudentName" style="color:#aaa;"></p>
+                    <label>رمز جدید</label>
+                    <input id="newStudentPassword" type="password" inputmode="numeric" class="form-control" placeholder="رمز جدید را وارد کنید">
+                    <label class="mt-3">تکرار رمز جدید</label>
+                    <input id="confirmStudentPassword" type="password" inputmode="numeric" class="form-control" placeholder="رمز جدید را دوباره وارد کنید">
+                </div>
+                <div class="modal-footer">
+                    <button class="secondary-btn" data-bs-dismiss="modal">انصراف</button>
+                    <button class="primary-btn" style="width:auto;padding:10px 30px;" onclick="saveStudentPassword()">
+                        <i class="bi bi-check2"></i>
+                        ذخیره رمز
+                    </button>
+                </div>
+            </div>
+        </div>
     </div>
 
 
@@ -1497,6 +1560,9 @@
             document.getElementById("editStudentPanelBtn").style.display =
                 currentUser === 3 ? "block" : "none";
 
+            document.getElementById("changeStudentPasswordBtn").style.display =
+                currentUser === 3 ? "block" : "none";
+
             renderClasses();
 
             showPage("products");
@@ -1598,7 +1664,7 @@
 
                                 <i class="bi bi-people"></i>
 
-                                ثبت نمره
+                                ${currentUser === 1 ? "مشاهده کارنامه" : "مشاهده و مدیریت دانش‌آموزان"}
 
                             </button>
 
@@ -1821,11 +1887,8 @@
                 );
 
             if (!student) {
-
                 showToast("اطلاعات دانش‌آموز پیدا نشد.");
-
                 return;
-
             }
 
             currentStudent = student;
@@ -1839,14 +1902,76 @@
             document.getElementById("panelClassName").textContent =
                 classInfo ? classInfo.title : "";
 
+            document.getElementById("gradeSection").style.display =
+                currentUser === 1 ? "none" : "block";
+
+            document.getElementById("attendanceSection").style.display =
+                currentUser === 1 ? "none" : "block";
+
+            document.getElementById("editStudentPanelBtn").style.display =
+                currentUser === 3 ? "block" : "none";
+
+            document.getElementById("changeStudentPasswordBtn").style.display =
+                currentUser === 3 ? "block" : "none";
+
+            if (currentUser === 1) {
+                document.getElementById("reportPasswordStudentName").textContent =
+                    "دانش‌آموز: " + (student.name || "بدون نام");
+
+                document.getElementById("reportCardPassword").value = "";
+
+                const modal = new bootstrap.Modal(
+                    document.getElementById("reportPasswordModal")
+                );
+                modal.show();
+                return;
+            }
+
             updateStudentSummary();
-
             showPage("studentPanel");
-
-            await loadRecords(student.id);
+            await loadRecords(student.id, currentUser);
 
         }
 
+
+        async function verifyAndOpenReport() {
+
+            if (!currentStudent) return;
+
+            const password =
+                document.getElementById("reportCardPassword").value.trim();
+
+            if (!password) {
+                showToast("رمز کارنامه را وارد کنید.");
+                return;
+            }
+
+            try {
+                const response = await postData({
+                    action: "verifyStudentPassword",
+                    studentId: currentStudent.id,
+                    password: password,
+                    userId: currentUser
+                });
+
+                if (!response.success) {
+                    showToast(response.message || "رمز کارنامه صحیح نیست.");
+                    return;
+                }
+
+                bootstrap.Modal
+                    .getInstance(document.getElementById("reportPasswordModal"))
+                    ?.hide();
+
+                updateStudentSummary();
+                showPage("studentPanel");
+                await loadRecords(currentStudent.id, currentUser, password);
+
+            } catch (error) {
+                console.error(error);
+                showToast("خطا در بررسی رمز کارنامه.");
+            }
+        }
 
         function updateStudentSummary() {
 
@@ -1869,7 +1994,7 @@
         }
 
 
-        async function loadRecords(studentId) {
+        async function loadRecords(studentId, userId = currentUser, studentPassword = "") {
 
             const container =
                 document.getElementById("recordsList");
@@ -1882,12 +2007,18 @@
 
             try {
 
+                const params = new URLSearchParams({
+                    action: "getRecords",
+                    studentId: String(studentId),
+                    userId: String(userId)
+                });
+
+                if (studentPassword) {
+                    params.set("password", studentPassword);
+                }
+
                 const response =
-                    await fetch(
-                        SCRIPT_URL +
-                        "?action=getRecords&studentId=" +
-                        encodeURIComponent(studentId)
-                    );
+                    await fetch(SCRIPT_URL + "?" + params.toString());
 
                 const result =
                     await response.json();
@@ -2422,6 +2553,80 @@
 
             }
 
+        }
+
+
+        /* =========================================================
+           STUDENT REPORT PASSWORD
+        ========================================================= */
+
+        function openStudentPasswordModal() {
+
+            if (currentUser !== 3 || !currentStudent) {
+                showToast("فقط مدیر / معاون می‌تواند رمز کارنامه را تغییر دهد.");
+                return;
+            }
+
+            document.getElementById("changePasswordStudentName").textContent =
+                "دانش‌آموز: " + (currentStudent.name || "بدون نام");
+
+            document.getElementById("newStudentPassword").value = "";
+            document.getElementById("confirmStudentPassword").value = "";
+
+            new bootstrap.Modal(
+                document.getElementById("studentPasswordModal")
+            ).show();
+        }
+
+
+        async function saveStudentPassword() {
+
+            if (currentUser !== 3 || !currentStudent) return;
+
+            const password =
+                document.getElementById("newStudentPassword").value.trim();
+
+            const confirm =
+                document.getElementById("confirmStudentPassword").value.trim();
+
+            if (!password) {
+                showToast("رمز جدید را وارد کنید.");
+                return;
+            }
+
+            if (password.length < 4) {
+                showToast("رمز باید حداقل ۴ کاراکتر باشد.");
+                return;
+            }
+
+            if (password !== confirm) {
+                showToast("تکرار رمز با رمز جدید یکسان نیست.");
+                return;
+            }
+
+            try {
+                const response = await postData({
+                    action: "changeStudentPassword",
+                    studentId: currentStudent.id,
+                    password: password,
+                    userId: currentUser
+                });
+
+                if (!response.success) {
+                    showToast(response.message || "تغییر رمز انجام نشد.");
+                    return;
+                }
+
+                bootstrap.Modal
+                    .getInstance(document.getElementById("studentPasswordModal"))
+                    ?.hide();
+
+                showToast("رمز کارنامه با موفقیت تغییر کرد.");
+
+            } catch (error) {
+                console.error(error);
+                showToast("خطا در تغییر رمز کارنامه.");
+            }
         }
 
 
